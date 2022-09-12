@@ -3,7 +3,7 @@
 An application for conducting a poll or survey, written in Python using Django. It is based on the Django Tutorial project, with additional functionality.  
 This application is part of the Individual Software Process course at Kasetsart University.  
 
-## What for?  
+## General info about this application  
 
 This is an online application which let visitor to create simple poll and let other to vote. Some feature which make convenient are add into this application to  
 make visitors feel more convenience in answering and creating poll.  
@@ -14,5 +14,6 @@ You may look into features info from [here](https://github.com/chinapat317/ku-po
   to be add in future.  
   ```
 ## Document
-* [All you should known for this application.](https://github.com/chinapat317/ku-polls/wiki)
+* [wiki home page](../../wiki/Home)
+* [vision statement](../../wiki/Vision statement)
 
