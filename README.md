@@ -15,5 +15,5 @@ You may look into features info from [here](https://github.com/chinapat317/ku-po
   ```
 ## Document
 * [wiki home page](../../wiki/Home)
-* [vision statement](../../wiki/Vision statement)
+* [vision statement](../../wiki/Vision+statement)
 
