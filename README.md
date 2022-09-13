@@ -14,8 +14,8 @@ You may look into features info from [here](https://github.com/chinapat317/ku-po
   to be add in future.  
   ```
 ## Document
-* [wiki home page](../../wiki/Home)
-* [vision statement](../../wiki/Vision+statement)
-* [development plan](../../wiki/Development+Plan)
-* [requirements](../../wiki/Requirements)
+* [Wiki home page](../../wiki/Home)
+* [Vision statement](../../wiki/Vision+statement)
+* [Development plan](../../wiki/Development+Plan)
+* [Requirements](../../wiki/Requirements)
 
