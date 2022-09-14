@@ -18,5 +18,5 @@ You may look into features info from [here](https://github.com/chinapat317/ku-po
 * [Vision statement](../../wiki/Vision+statement)
 * [Development plan](../../wiki/Development+Plan)
 * [Requirements](../../wiki/Requirements)
-* [Project's taskboard](https://github.com/chinapat317/projects/2/views/2)
+* [Project's taskboard](https://github.com/user/chinapat317/projects/2/views/2)
 
