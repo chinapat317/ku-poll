@@ -71,6 +71,9 @@ class QuestionDetailView(TestCase):
         self.assertContains(response, past_question.question_text)
 
 
+
+
+
     
 
 
