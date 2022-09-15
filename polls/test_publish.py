@@ -1,5 +1,6 @@
 import datetime
 from urllib import response
+from venv import create
 from .models import Question
 from django.test import TestCase
 from django.utils import timezone
@@ -38,6 +39,40 @@ class QuestionIndexView(TestCase):
         question = create_question(text="Past question", days=-30)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(response.context['question_list'], [question],)
+    
+    def test_future_question(self):
+        question = create_question(text="future question", days=30)
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(response.context['question_list'], [])
+
+    def test_past_n_future_question(self):
+        future_question = create_question(text="future question", days=30)
+        past_question = create_question(text='past question', days=-30)
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(response.context['question_list'], [past_question],)
+
+    def test_question_order(self):
+        past_question = create_question(text="past question", days=-20)
+        recent_question = create_question(text="recent_question", days=-2)
+        response = self.client.get(reverse('polls:index'))
+        self.assertQuerysetEqual(response.context['question_list'],[recent_question, past_question])
+
+class QuestionDetailView(TestCase):
+    
+    def test_future_question(self):
+        future_question = create_question(text='future', days=1)
+        url = reverse('polls:detail', args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        past_question = create_question(text="past", days=-10)
+        response = self.client.get(reverse('polls:detail',args=(past_question.id,)))
+        self.assertContains(response, past_question.question_text)
+
+
+    
+
 
 
     
