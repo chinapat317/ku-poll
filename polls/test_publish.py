@@ -9,7 +9,7 @@ from django.urls import reverse
 class QuestionModelTest(TestCase):
 
     def test_future_publish_recent(self):
-        time = timezone.now() + datetime.timedelta(days=30)
+        time = timezone.now() + datetime.timedelta(days=27)
         furure_question = Question(pub_date=time)
         self.assertIs(furure_question.was_publish_recently(), False)
     
@@ -23,9 +23,31 @@ class QuestionModelTest(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_publish_recently(), True)
 
-def create_question(text, days):
+    def test_future_is_published(self):
+        """
+        Question isn't already published yet if published date still in future.
+        """
+        future_question = create_question(text="future", days=27)
+        self.assertIs(False, future_question.is_published())
+
+    def test_past_is_published(self):
+        """
+        Question will already get published if published date is in the past
+        """
+        past_question = create_question(text="past", days=-365)
+        self.assertIs(True, past_question.is_published())
+
+    def test_bullshit_date_is_published(self):
+        """
+        Question which published date is behind closed date can't get published.
+        """
+        with self.assertRaises(ValueError):
+            bs_question = create_question(text="bullshit", days=366, end_days=365)
+
+def create_question(text, days, end_days=30):
     time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(question_text=text, pub_date=time)
+    end_time = timezone.now() + datetime.timedelta(days=end_days)
+    return Question.objects.create(question_text=text, pub_date=time, end_date=end_time)
 
 class QuestionIndexView(TestCase):
 
@@ -41,12 +63,12 @@ class QuestionIndexView(TestCase):
         self.assertQuerysetEqual(response.context['question_list'], [question],)
     
     def test_future_question(self):
-        question = create_question(text="future question", days=30)
+        question = create_question(text="future question", days=27)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(response.context['question_list'], [])
 
     def test_past_n_future_question(self):
-        future_question = create_question(text="future question", days=30)
+        future_question = create_question(text="future question", days=27)
         past_question = create_question(text='past question', days=-30)
         response = self.client.get(reverse('polls:index'))
         self.assertQuerysetEqual(response.context['question_list'], [past_question],)
