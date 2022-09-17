@@ -1,14 +1,14 @@
-from gc import get_objects
 from .models import Question, Choice
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    context_name = 'question_list'
+    context_object_name = 'question_list'
 
     def get_queryset(self):
         return Question.objects.filter(
@@ -35,8 +35,8 @@ class DetailView(generic.DetailView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object is None:
-            msg = "Access denied."
-            return HttpResponseRedirect(reverse('polls:index'), msg)
+            messages.add_message(request, messages.INFO, 'Access denied')
+            return HttpResponseRedirect(reverse('polls:index'))
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
