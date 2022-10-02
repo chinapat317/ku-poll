@@ -2,7 +2,6 @@ import datetime
 from time import timezone
 from django.db import models
 from django.utils import timezone
-#from django.contrib.auth import models
 
 class Question(models.Model):
 
@@ -35,13 +34,16 @@ class Choice(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
     
     def __str__(self):
         return self.choice_text
 
-'''
+
 class Votes(models.Model):
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-    user = models.User.get_username()
-'''
+    username = models.CharField(max_length=200)
+
+    @property
+    def question(self):
+        return self.choice.question.question_text()
+
