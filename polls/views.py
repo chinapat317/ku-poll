@@ -1,3 +1,4 @@
+from secrets import choice
 from .models import Question, Choice, Votes
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -46,6 +47,7 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     user = request.user
+    username = user.get_username()
     if not user.is_authenticated:
         messages.add_message(request, messages.INFO, 'Please login before vote.')
         return HttpResponseRedirect('../../../account/login/')
@@ -58,7 +60,15 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        select_choice.votes_set.create(username=user.get_username())
+        choice = question.choice_set.all()
+        for each_choice in choice:
+            try:
+                vote = each_choice.votes_set.filter(username=username)
+                for each_vote in vote:
+                    each_vote.delete()
+            except:
+                pass
+        select_choice.votes_set.create(username=username)
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
