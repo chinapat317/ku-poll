@@ -45,6 +45,10 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 def vote(request, question_id):
+    user = request.user
+    if not user.is_authenticated:
+        messages.add_message(request, messages.INFO, 'Please login before vote.')
+        return HttpResponseRedirect('../../../account/login/')
     question = get_object_or_404(Question, pk=question_id)
     try:
         select_choice = question.choice_set.get(pk=request.POST['choice'])

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from telnetlib import AUTHENTICATION
+from telnetlib import AUTHENTICATION, LOGOUT
 import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,8 +34,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
-    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -128,6 +128,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#redirect after login and logout
+#redirect after login.
 LOGIN_REDIRECT_URL = '/polls/'
-LOGOUT_REDIRECT_URL = '/'

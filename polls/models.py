@@ -1,9 +1,8 @@
 import datetime
-from msilib.schema import Class
-from operator import mod
 from time import timezone
 from django.db import models
 from django.utils import timezone
+#from django.contrib.auth import models
 
 class Question(models.Model):
 
@@ -40,3 +39,9 @@ class Choice(models.Model):
     
     def __str__(self):
         return self.choice_text
+
+'''
+class Votes(models.Model):
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    user = models.User.get_username()
+'''
